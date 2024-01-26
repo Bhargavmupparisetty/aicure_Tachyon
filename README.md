@@ -40,7 +40,7 @@ In the command replace the `test_data.csv` with your csv file address.
 
 3.View Results:
 
-The predicted heart rates will be saved to results.csv.
+The predicted heart rates will be saved to `results.csv`.
 
 ### Additional Notes
 The provided model is a basic example. Feel free to explore and modify the model hyperparameters and features based on your specific requirements.
