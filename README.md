@@ -33,9 +33,8 @@ This repository contains a machine learning model for predicting heart rates bas
 Ensure you have a CSV file containing test data.For example, `test_data.csv`.
 
 2.Run the Prediction:
-
-```bash 
-python run.py test_data.csv
+ 
+`python run.py test_data.csv`
 
 In the command replace the `test_data.csv` with your csv file address.
 
