@@ -55,9 +55,9 @@ Inspired by the need for accurate heart rate predictions.
 ## Author
 - **Team name:** Tachyon
 - **Team members names :**
-- **M.Bhargav - 9493362433**
-- **M.Hari Narayana - 9502818453**
-- **B.Vikas - 9154996776.**
+- **Bhargav Mupparisetty - 9493362433 (Tean Leader)**
+- **HariNarayana Murari - 9502818453**
+- **Bommaganti Sri Veerabhadra Vikas - 9154996776.**
 
 
 
