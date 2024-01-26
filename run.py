@@ -4,9 +4,10 @@ import joblib
 
 def predict_heart_rate(input_file, model_filename='gradient_boosting_model.joblib', output_file='results.csv'):
     # Load the input data
-    input_data = pd.read_csv(input_file)
+    data = pd.read_csv(input_file)
 
     # Load the trained model
+    print("loading the model...")
     loaded_model = joblib.load(model_filename)
 
     # Extract features for prediction
@@ -17,20 +18,23 @@ def predict_heart_rate(input_file, model_filename='gradient_boosting_model.jobli
                 'SDRR_REL_RR', 'RMSSD_REL_RR', 'SDSD_REL_RR', 'SDRR_RMSSD_REL_RR',
                 'KURT_REL_RR', 'SKEW_REL_RR']
 
-    
     x_data = data[features]
     x_uuid = data['uuid']
+    
     # Make predictions on the test set using the loaded model
     y_pred_loaded = loaded_model.predict(x_data)
-    df['HR'] = pd.DataFrame(y_pred_loaded)
-    result_df = pd.concat([x_uuid, df['HR']], axis=1, ignore_index=True)
-    result_df.dropna()
-    # Set column names and index
-    result_df.columns = ['uuid', 'HR']
-    result_df.dropna()
     
+
+    data['HR'] = pd.DataFrame(y_pred_loaded)
+    
+
+    result_df = pd.concat([x_uuid, data['HR']], axis=1)
+    
+    # Drop rows with NaN values
+    result_df = result_df.dropna()
+
     # Save the results to a CSV file
-    input_data.to_csv(output_file, index=False)
+    result_df.to_csv(output_file, index=False)
     print(f"Results saved to {output_file}")
 
 if __name__ == "__main__":
