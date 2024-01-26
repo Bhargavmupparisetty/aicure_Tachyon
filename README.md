@@ -34,7 +34,8 @@ Ensure you have a CSV file containing test data.For example, `test_data.csv`.
 
 2.Run the Prediction:
 
-`python run.py test_data.csv`
+```bash 
+python run.py test_data.csv
 
 In the command replace the `test_data.csv` with your csv file address.
 
