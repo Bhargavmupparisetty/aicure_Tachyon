@@ -1,14 +1,25 @@
 import sys
+import os
 import pandas as pd
 import joblib
 
-def predict_heart_rate(input_file, model_filename='gradient_boosting_model.joblib', output_file='results.csv'):
+def predict_heart_rate(file_address, model_folder='models', model_filename='gradient_boosting_model.joblib', output_file='results.csv'):
+    # Extract the file name from the file address
+    input_file = os.path.basename(file_address)
+
+    # Construct the full path to the trained model
+    model_path = os.path.join(model_folder, model_filename)
+
+    # Check if the model file exists
+    if not os.path.exists(model_path):
+        print(f"Error: Model file '{model_path}' not found.")
+        sys.exit(1)
+
     # Load the input data
-    data = pd.read_csv(input_file)
+    data = pd.read_csv(file_address)
 
     # Load the trained model
-    print("loading the model...")
-    loaded_model = joblib.load(model_filename)
+    loaded_model = joblib.load(model_path)
 
     # Extract features for prediction
     features = ['VLF', 'VLF_PCT', 'LF', 'LF_PCT', 'LF_NU', 'HF', 'HF_PCT',
@@ -20,16 +31,16 @@ def predict_heart_rate(input_file, model_filename='gradient_boosting_model.jobli
 
     x_data = data[features]
     x_uuid = data['uuid']
-    
+
     # Make predictions on the test set using the loaded model
     y_pred_loaded = loaded_model.predict(x_data)
-    
 
+    # Add predicted heart rates to the dataframe
     data['HR'] = pd.DataFrame(y_pred_loaded)
-    
 
+    # Create a new dataframe with 'uuid' and 'HR' columns
     result_df = pd.concat([x_uuid, data['HR']], axis=1)
-    
+
     # Drop rows with NaN values
     result_df = result_df.dropna()
 
@@ -39,8 +50,8 @@ def predict_heart_rate(input_file, model_filename='gradient_boosting_model.jobli
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python run.py <input_file>")
+        print("Usage: python run.py <file_address>")
         sys.exit(1)
 
-    input_file = sys.argv[1]
-    predict_heart_rate(input_file)
+    file_address = sys.argv[1]
+    predict_heart_rate(file_address)
